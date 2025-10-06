@@ -113,3 +113,73 @@ person.show();
 ```
 
 Summary: use normal functions for object methods (or `bind`) to get the method's object as `this`; use arrow functions when you want to capture the outer lexical
+
+
+## **Global Context**
+
+`this` refers to the [`window`](https://developer.mozilla.org/en-US/docs/Web/API/Window) object in browsers or `module.exports` in Node.js (not `global`, as you might expect).
+
+```jsx
+// in a browser
+console.log(this);
+// Window { ... }
+```
+
+```jsx
+// in Node.js
+console.log(this);
+// {}
+```
+
+# 7.) Fat Arrows and `this`
+
+- **Regular functions** in objects have their own `this`, which refers to the **object** that called them.
+    
+    ```jsx
+    const author = {
+      firstName: "Lane",
+      lastName: "Wagner",
+      getName() { return `${this.firstName} ${this.lastName}`; }
+    };
+    console.log(author.getName()); // Lane Wagner
+    
+    ```
+    
+- **Arrow functions** don’t have their own `this`; they **inherit** it from the **parent scope**.
+    
+    ```jsx
+    const author = {
+      firstName: "Lane",
+      lastName: "Wagner",
+      getName: () => `${this.firstName} ${this.lastName}`
+    };
+    console.log(author.getName()); // undefined undefined
+    
+    ```
+    
+- This makes arrow functions useful when you want to **preserve the surrounding `this` context**, such as in **React** or **Vue** components, but **not** ideal for object methods.
+
+# 8.) Spread Syntax
+
+The spread syntax [shallow-copies](https://developer.mozilla.org/en-US/docs/Glossary/Shallow_copy) the properties of the objects you're spreading. If properties have the same name, the last (right-most) object's property will overwrite the previous ones.
+
+```jsx
+const engineering_dept = {
+  lane: "software engineer",
+  hunter: "software engineer",
+};
+
+const video_dept = {
+  lane: "cringe youtuber",
+  alex: "video producer",
+};
+
+const all_employees = { ...engineering_dept, ...video_dept }; //here video_dept 
+/*                                                            //is the right-most
+{
+  lane: 'cringe youtuber',
+  hunter: 'software engineer',
+  alex: 'video producer'
+}
+*/
+```
