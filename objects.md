@@ -131,7 +131,7 @@ console.log(this);
 // {}
 ```
 
-# 7.) Fat Arrows and `this`
+# 3.) Fat Arrows and `this`
 
 - **Regular functions** in objects have their own `this`, which refers to the **object** that called them.
     
@@ -159,7 +159,7 @@ console.log(this);
     
 - This makes arrow functions useful when you want to **preserve the surrounding `this` context**, such as in **React** or **Vue** components, but **not** ideal for object methods.
 
-# 8.) Spread Syntax
+# 4.) Spread Syntax
 
 The spread syntax [shallow-copies](https://developer.mozilla.org/en-US/docs/Glossary/Shallow_copy) the properties of the objects you're spreading. If properties have the same name, the last (right-most) object's property will overwrite the previous ones.
 
